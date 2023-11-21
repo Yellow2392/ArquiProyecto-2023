@@ -14,7 +14,7 @@ module controller (
 	MemWrite,
 	MemtoReg,
 	PCSrc,
-	wireCMP //Cambio
+	wireSLT //Cambio
 );
 	input wire clk;
 	input wire reset;
@@ -29,7 +29,7 @@ module controller (
 	output wire MemtoReg;
 	output wire PCSrc;
 
-	output wire wireCMP;//Cambio
+	output wire wireSLT;//Cambio
 
 	wire [1:0] FlagW;
 	wire NoWrite;
@@ -37,7 +37,7 @@ module controller (
 	wire RegW;
 	wire MemW;
 
-	assign wireCMP = (Instr[24:21] == 4'b1010) & Instr[20]; //Cambio
+	//assign wireCMP = (Instr[24:21] == 4'b1010) & Instr[20]; //Cambio
 
 	decode dec(
 		.Op(Instr[27:26]),
@@ -52,7 +52,8 @@ module controller (
 		.ImmSrc(ImmSrc),
 		.RegSrc(RegSrc),
 		.ALUControl(ALUControl),
-		.NoWrite(NoWrite)
+		.NoWrite(NoWrite),
+		.wireSLT(wireSLT)
 	);
 	condlogic cl(
 		.clk(clk),

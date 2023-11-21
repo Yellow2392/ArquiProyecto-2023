@@ -1,4 +1,5 @@
 `include "mux2.v"
+`include "mux3.v"
 `include "flopr.v"
 `include "adder.v"
 `include "regfile.v"
@@ -21,7 +22,7 @@ module datapath (
 	ALUResult,
 	WriteData,
 	ReadData,
-	wireCMP //Cambio
+	wireSLT //Cambio
 );
 	input wire clk;
 	input wire reset;
@@ -48,8 +49,8 @@ module datapath (
 	wire [3:0] RA1;
 	wire [3:0] RA2;
 
-    input wire wireCMP; //Cambio
-	reg [31:0] Result1;
+    input wire wireSLT; //Cambio
+	wire [31:0] Result1;
 
 
 	mux2 #(32) pcmux(
@@ -122,10 +123,10 @@ module datapath (
 		ALUFlags
 	);
 
-
+	/*
 	always @(*) begin
         // Si wireCMP es 1 es CMP u otra instruccion, si es 0 es SLT(i)
-        if (wireCMP == 1'b0)
+        if (wireSLT == 1'b0)
             if (ALUFlags[1] == 1'b0)
                 Result1 = 32'b00000000000000000000000000000001;
             else
@@ -133,5 +134,14 @@ module datapath (
         else
             Result1 = Result;
     end // Cambio
-	
+	*/
+
+	mux3 sltmux(
+		.d0(32'b1),
+		.d1(32'b0),
+		.d2(Result),
+		.s({~wireSLT,ALUFlags[1]}),
+		.y(Result1)
+	);
+
 endmodule

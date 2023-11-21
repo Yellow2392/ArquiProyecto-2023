@@ -27,7 +27,7 @@ module arm (
 	wire [1:0] RegSrc;
 	wire [1:0] ImmSrc;
 	wire [1:0] ALUControl;
-	wire wireCMP; //Cambio
+	wire wireSLT; //Cambio
 	controller c(
 		.clk(clk),
 		.reset(reset),
@@ -41,7 +41,7 @@ module arm (
 		.MemWrite(MemWrite),
 		.MemtoReg(MemtoReg),
 		.PCSrc(PCSrc),
-		.wireCMP(wireCMP) //Cambio
+		.wireSLT(wireSLT) //Cambio
 	);
 	datapath dp(
 		.clk(clk),
@@ -59,6 +59,6 @@ module arm (
 		.ALUResult(ALUResult),
 		.WriteData(WriteData),
 		.ReadData(ReadData),
-		.wireCMP(wireCMP)//Cambio
+		.wireSLT(wireSLT)//Cambio
 	);
 endmodule
