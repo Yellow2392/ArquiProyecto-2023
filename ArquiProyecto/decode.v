@@ -72,7 +72,7 @@ module decode (
 				default: 
 					ALUControl = 2'bxx;
 			endcase
-			FlagW[1] = Funct[0];
+			FlagW[1] = ((Funct[4:1] == 4'b1010) | Funct[0]); //Cambio
 			FlagW[0] = ( (Funct[4:1] == 4'b1010) | Funct[0]) & ((ALUControl == 2'b00) | (ALUControl == 2'b01));
 			NoWrite = (Funct[4:1] == 4'b1010) & Funct[0];
 			//wireCMP = (Funct[4:1] == 4'b1010) & Funct[0]; cambiar

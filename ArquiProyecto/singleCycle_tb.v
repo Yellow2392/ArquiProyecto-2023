@@ -17,8 +17,6 @@ module testbench;
 	);
 	
 	initial begin
-		$dumpfile("singleCycle_tb.vcd");
-		$dumpvars(0,testbench);
 		reset <= 1;
 		#(22)
 			;
@@ -32,6 +30,12 @@ module testbench;
 		#(5)
 			;
 	end
+
+	initial begin
+	#500
+	$finish;
+	end
+
 	always @(negedge clk)
 		if (MemWrite)
 			if ((DataAdr === 100) & (WriteData === 7)) begin
@@ -42,4 +46,8 @@ module testbench;
 				$display("Simulation failed");
 				$stop;
 			end
+	initial begin
+		$dumpfile("singleCycle_tb.vcd");
+		$dumpvars(0,testbench);
+	end
 endmodule
